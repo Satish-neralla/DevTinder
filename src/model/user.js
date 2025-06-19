@@ -25,7 +25,7 @@ const userSchema = new mongoose.Schema({
     Gender : {
         type: "String",
         validate(value){
-            if(!["male","female","Others"].includes(value)){
+            if(!["male","female","others"].includes(value)){
                 throw new Error("Gender Data is not valided")
             }
         }
@@ -35,6 +35,19 @@ const userSchema = new mongoose.Schema({
     },
     password:{
         type: "String"
+    },
+    photoUrl: {
+      type: String,
+      default: "https://geographyandyou.com/images/user-profile.png",
+      validate(value) {
+        if (!validator.isURL(value)) {
+          throw new Error("Invalid Photo URL: " + value);
+        }
+      },
+    },
+    about: {
+      type: String,
+      default: "This is a default about of the user!",
     }
     }
     ,{

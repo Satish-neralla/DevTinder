@@ -7,7 +7,7 @@ const {validateEditProfileData} = require("../utils/validate");
 const profileRouter = express.Router();
 
 
-profileRouter.post("/profile/view", userAuth, async (req, res) =>{
+profileRouter.get("/profile/view", userAuth, async (req, res) =>{
  res.send(req.user);
 });
 

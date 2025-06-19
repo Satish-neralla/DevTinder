@@ -17,7 +17,7 @@ const validateSignupData = (req) =>{
 }
 
 const validateEditProfileData = (req) => {
-	const allowed_Update_keys = ["firstName","lastName","Gender","Age","email"];
+	const allowed_Update_keys = ["firstName","lastName","Gender","Age","photoUrl","about"];
 	const is_update_allowed = Object.keys(req.body).every(k => allowed_Update_keys.includes(k)); 
 		
 	return is_update_allowed;

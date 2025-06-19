@@ -7,17 +7,24 @@ const bycrypt = require("bcryptjs");
 const cookieParser = require("cookie-parser");
 const JWT = require("jsonwebtoken");
 const {userAuth} = require("./middlewares/auth");
+const cors = require("cors");
 
 app.use(express.json());
 app.use(cookieParser());
+app.use(cors({
+	origin : "http://localhost:5173",
+	credentials: true
+}));
 
 const authRouter = require("./Routes/auth");
 const profileRouter = require("./Routes/profile");
 const requestRouter = require("./Routes/request");
+const userRouter = require("./Routes/user");
 
 app.use("/",authRouter);
 app.use("/",profileRouter);
 app.use("/",requestRouter);
+app.use("/",userRouter);
 
 connectDB()
 .then( () => {
