@@ -18,7 +18,7 @@ userRouter.get("/user/requests/received", userAuth, async(req, res) => {
 		;
 
 		res.json({
-			data: connectionRequests.map((row) => row.fromUserId)
+			data: connectionRequests
 		});
 
 	}
