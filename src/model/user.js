@@ -56,7 +56,7 @@ const userSchema = new mongoose.Schema({
 
     userSchema.methods.getJWT = async function(){
         const user = this;
-        const token = await JWT.sign({_id: user._id},"DevTinder@2025V1");
+        const token = await JWT.sign({_id: user._id},process.env.JWT_SECRET);
         return token;
     };
 

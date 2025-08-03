@@ -4,6 +4,7 @@ const User = require("../model/user");
 const connectionRequest = require("../model/connectionRequest");
 
 const requestRouter = express.Router();
+const sendEmail = require("../utils/sendEmail");
 
 requestRouter.post("/request/send/:status/:userId", userAuth, async (req, res) =>{
 	try{
@@ -16,12 +17,17 @@ requestRouter.post("/request/send/:status/:userId", userAuth, async (req, res) =
 			throw new Error("Invalid request status:" +status);
 		}
 		// Validate the connection request unique between twoIDs
-		const existingConnectionRequest = connectionRequest.findOne({
+		const existingConnectionRequest = await connectionRequest.findOne({
 			$or: [
 				{fromUserId, toUserId},
 				{fromUserId: toUserId, toUserId: fromUserId}
 			]
 		});
+
+		const toUser = await User.findById(toUserId);
+		if (!toUser) {
+			res.status(404).json({ message: "User not found!" });
+		}
 
 		if(existingConnectionRequest){
 			res.json(
@@ -37,8 +43,11 @@ requestRouter.post("/request/send/:status/:userId", userAuth, async (req, res) =
 			toUserId,
 			status
 		});
+		console.log(process.env.AWS_ACCESS_KEY);
 
 		const data = await connectionRequestdata.save();
+		const emailBody = `<h1>New Connection Request</h1><br/>Hey ${req.user.firstName}, <br/> You have a request from ${toUser.firstName}`;
+		const emailResponse = await sendEmail.run("New Connection Request", emailBody);
 		res.json({
 			message: "Connection request sent successfully",
 			data

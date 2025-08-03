@@ -8,6 +8,7 @@ const cookieParser = require("cookie-parser");
 const JWT = require("jsonwebtoken");
 const {userAuth} = require("./middlewares/auth");
 const cors = require("cors");
+const envConfig = require('dotenv').config()
 
 app.use(express.json());
 app.use(cookieParser());
@@ -28,7 +29,7 @@ app.use("/",userRouter);
 
 connectDB()
 .then( () => {
-	app.listen("3000", ()=> {
+	app.listen(process.env.PORT, ()=> {
 		console.log("Server listining successfully.");
 	});
 	console.log("DB Connection Established");
