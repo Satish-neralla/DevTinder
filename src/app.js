@@ -8,7 +8,7 @@ const cookieParser = require("cookie-parser");
 const JWT = require("jsonwebtoken");
 const {userAuth} = require("./middlewares/auth");
 const cors = require("cors");
-const envConfig = require('dotenv').config()
+require("dotenv").config();
 
 app.use(express.json());
 app.use(cookieParser());
