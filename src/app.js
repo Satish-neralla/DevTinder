@@ -9,6 +9,7 @@ const JWT = require("jsonwebtoken");
 const {userAuth} = require("./middlewares/auth");
 const cors = require("cors");
 require("dotenv").config();
+require("./utils/cron-job");
 
 app.use(express.json());
 app.use(cookieParser());
@@ -21,11 +22,14 @@ const authRouter = require("./Routes/auth");
 const profileRouter = require("./Routes/profile");
 const requestRouter = require("./Routes/request");
 const userRouter = require("./Routes/user");
+const paymentRouter = require("./Routes/payment");
 
 app.use("/",authRouter);
 app.use("/",profileRouter);
 app.use("/",requestRouter);
 app.use("/",userRouter);
+app.use("/",paymentRouter);
+
 
 connectDB()
 .then( () => {

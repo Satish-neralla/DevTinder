@@ -19,8 +19,8 @@ const connecionRequestSchema = new mongoose.Schema({
             message: `{value} is incoorect status type`
         }
 
-    }
-});
+    },
+}, { timestamps: true });
 
 connecionRequestSchema.index({fromUserId: 1, toUserId: 1});
 
